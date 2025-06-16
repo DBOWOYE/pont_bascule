@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Gestion Pont bascule
+{% endblock %}
+
+
+{% block content %}
+		<!-- breadcrumb -->
+		<div class="breadcrumb-header justify-content-between">
+			<div class="left-content">
+				<span class="main-content-title mg-b-0 mg-b-lg-1 fw-bold">GESTION DU PONT BASCULE</span>
+			</div>
+			<div class="justify-content-center mt-2">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item fs-15"><a href="javascript:void(0);">Gestion des pesées</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><strong>Pesées encours</strong></li>
+				</ol>
+			</div>
+		</div>
+
+		<!-- /breadcrumb -->
+		<!-- -->
+		<div class="row">
+			<div class="col-12 col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<!-- Notifications  -->
+						<div class="col-12">
+							{% if messages %}
+							{% for message in messages %}
+							<p {% if message.tags %} class="bg-{{ message.tags }} p-2 text-white" {% endif %}>
+								{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+								{{ message }}
+							</p>
+							{% endfor %}
+						{% endif %}
+						</div>
+                        
+						<!-- Fin notification  -->
+
+					</div>
+					<div class="card-body pt-0 example1-table">
+						<div class=" d-flex justify-content-end mb-2">
+                            <a href="{% url 'enregistrer-pesee' %}" class="btn btn-dark btn-sm fw-bold"> <!--data-bs-toggle="modal" data-bs-target="#modalUserRegister"-->
+                                <i class="fa fa-plus me-2"></i> Nouvelle pesée
+                            </a>
+						</div>
+                        <div >
+                            <h6 class="fw-bold">Pesées encours</h6>
+                        </div>
+						<div class="table-responsive" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table nowrap" id="example">
+                                        <thead>
+                                            <th><strong>#</strong></th>
+                                            <th ><strong>Reference</strong></th>
+                                            <th><strong>Radar</strong></th>
+                                            <th><strong>Immatriculation</strong></th>
+                                            <th><strong>Date entrée</strong></th>
+                                            <th><strong>Poids vide</strong></th>
+                                            <th><strong>Date sortie</strong></th>
+                                            <th><strong>Poids chargé</strong></th>
+                                            <th><strong>Poids Net</strong></th>
+                                            <th><strong>Action</strong></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for pesee in pesees %}
+                                            <tr>
+                                                <td class="text-center">{{forloop.counter}}</td>
+                                                <td class="text-center">{{pesee.reference}}</td>
+                                                <td class="text-center">{{pesee.camion.radar}}</td>
+                                                <td class="text-center">{{pesee.camion.immatriculation}}</td>
+                                                <td class="text-center">{{pesee.date_entree|date:"d.m.Y H:i"}}</td>
+                                                <td class="text-center"> {{pesee.poids_vide}}</td>
+                                                <td class="text-center">  {% if pesee.date_sortie %} {{pesee.date_sortie|date:"d.m.Y H:i"}} {% endif %}</td>
+                                                <td class="text-center">{{pesee.poids_charge}}</td>
+                                                <td class="text-center">{{pesee.poids_net}}</td>
+                                                <td>
+                                                    <a href="{% url 'modifier-pesee' pesee.slug %}" class="badge bg-dark"><i class="fa fa-pencil"></i></a>
+                                                    <span role="button" data-href="{% url 'supprimer-pesee' pesee.slug %}" data-bs-toggle="modal" data-bs-target="#delete" class="delete badge bg-danger">
+                                                        <i class="fa fa-trash-alt"></i>
+                                                    </span>
+                                                    {% if pesee.poids_net > 0 %}
+                                                        <a href="{% url 'valider-pesee' pesee.slug %}" class="badge bg-primary"><i class="fa fa-check-circle"></i></a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /row closed -->
+		</div>
+	
+{% endblock %}

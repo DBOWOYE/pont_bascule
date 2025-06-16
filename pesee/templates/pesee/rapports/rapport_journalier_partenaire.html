@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Gestion Pont bascule
+{% endblock %}
+
+
+{% block content %}
+		<!-- breadcrumb -->
+		<div class="breadcrumb-header justify-content-between">
+			<div class="left-content">
+				<span class="main-content-title mg-b-0 mg-b-lg-1 fw-bold">GESTION DU PONT BASCULE</span>
+			</div>
+			<div class="justify-content-center mt-2">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item fs-15"><a href="javascript:void(0);">Gestion des pesées</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><strong>Rapport journalier partenaire</strong></li>
+				</ol>
+			</div>
+		</div>
+
+		<!-- /breadcrumb -->
+		<!-- -->
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'rapport-journalier-partenaire' %}" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-4">
+                                <select name="partenaire" id="" class="form-select select">
+                                    <option value="">---- Selectionner un partenaire ----</option>
+                                    {% for p in partenaires %}
+                                    <option value="{{p.pk}}">{{p.nom}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="datetime-local" name="date1" class="form form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="datetime-local" name="date2" class="form form-control" required>
+                            </div>
+                                <button type="submit" class="btn btn-primary btn-sm mt-2"><i class="fa fa-search me-2"></i> Rechercher</button>
+                           
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% if rapport %}
+		<div class="row">
+			<div class="col-12 col-sm-12">
+				<div class="card">
+					<div class="card-body pt-0 example1-table">
+                        <div class="p-3 text-end"> 
+                            <a target="_blank" href="{% url 'rapport-journalier-partenaire-excel' %}" class="badge bg-dark"><i class="fa fa-download me-1"></i>Vers excel</a>
+                        </div>
+						<div class="table-responsive" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <table class="table nowrap">
+                                        <thead class="text-center">
+                                            <th><strong>#</strong></th>
+                                            <th ><strong>Reference</strong></th>
+                                            <th><strong>Radar</strong></th>
+                                            <th><strong>Immatriculation</strong></th>
+                                            <th><strong>Date entrée</strong></th>
+                                            <th><strong>Poids vide (kg)</strong></th>
+                                            <th><strong>Date sortie</strong></th>
+                                            <th><strong>Poids chargé (kg)</strong></th>
+                                            <th><strong>Poids Net (t)</strong></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for r in rapport %}
+                                            <tr>
+                                                <td class="text-center">{{forloop.counter}}</td>
+                                                <td class="text-center">{{r.reference}}</td>
+                                                <td class="text-center">{{r.camion.radar}}</td>
+                                                <td class="text-center">{{r.camion.immatriculation}}</td>
+                                                <td class="text-center">{{r.date_entree|date:"d.m.Y H:i"}}</td>
+                                                <td class="text-center">{{r.poids_vide}}</td>
+                                                <td class="text-center">{{r.date_sortie|date:"d.m.Y H:i"}}</td>
+                                                <td class="text-center">{{r.poids_charge}}</td>
+                                                <td class="text-end">{{r.poids_net}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="8"><strong>Total</strong></td>
+                                                <td class="fw-bold text-end">{{total}}</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /row closed -->
+		</div>
+    {% endif %}
+	
+{% endblock %}

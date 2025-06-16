@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport journalier pesée</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame {           /* Static Frame */
+                -pdf-frame-content: header_content;
+                left: 40pt;
+                width: 512pt;
+                top: 20pt;
+                height: 40pt;
+            }
+            @frame content_frame {          /* Content Frame */
+                left: 40pt; width: 512pt; top: 60pt; height: 700pt;
+            }
+            @frame footer_frame {           /* Another static Frame */
+                -pdf-frame-content: footer_content;
+                left: 40pt; width: 512pt; top: 790pt; height: 30pt;*
+
+            }
+        }
+
+        .titre, .demande-achat{
+            font-size: 16px;
+        }
+        .titre2, .entete-colonne{
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .articles{
+            text-align: center;
+            font-size: 12px;
+        }
+        .demandeur{
+            font-size: 14px;
+         }
+
+         .signature{
+            font-size: 12px;
+            font-weight: bold;
+          }
+          td {
+            padding:3px;
+            text-align:center;
+            }
+        .table{
+            width: 100%;
+            table-layout: fixed;
+            border: 0.2px solid black;
+            padding:2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header_content" style="text-align: center;">PONT BASCULE</div>
+    <h1 style="text-align: center; font-size: 14px; margin-bottom:0px;">RAPPORT JOURNALIER PESEE</h1>
+    <h6 align="center">Date : {{date_rechercher|date:"d.m.Y"}}</h6>
+
+    <div>
+        <table class="table table-bordered text-nowrap mb-0" id="example">
+            <thead class="text-center">
+                <tr>
+                    <th class="fw-bold" width="5%">#</th>
+                    <th class="fw-bold">Reference</th>
+                    <th class="fw-bold">Radar</th>
+                    <th class="fw-bold">Immatriculation</th>
+                    <th class="fw-bold">Date entrée</th>
+                    <th class="fw-bold">Poids vide</th>
+                    <th class="fw-bold">Date sortie</th>
+                    <th class="fw-bold">Poids chargé</th>
+                    <th class="fw-bold">Poids Net</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in rapport %}
+                <tr class="text-center">
+                    <td class="text-center">{{forloop.counter}}</td>
+                    <td>{{r.reference}}</td>
+                    <td>{{r.camion.radar}}</td>
+                    <td align="center">{{r.date_entree|date:"d.m.Y H:i"}}</td>
+                    <td align="right">{{r.poids_vide}}</td>
+                    <td align="center">{{r.date_sortie|date:"d.m.Y H:i"}}</td>
+                    <td align="right">{{r.poids_charge}}</td>
+                    <td align="right">{{r.poids_net}}</td>
+                </tr>
+                {% endfor %}
+                <tr style="text-align: center; font-size: 12px;">
+
+                    <td colspan="7" style="font-weight: bold;" align="center">
+                        Total
+                    </td>
+                    
+                    <td align="right">
+                    <strong>{{total}}</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div >
+        <table>
+             <tr>
+                <td align="right">Fait, le {{date|date:"d/m/Y"}}</td>
+            </tr>
+            <tr class="signature">
+                <td align="right">Le Gestionnaire du Transport</td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div id="footer_content" style="text-align: center;  border-top-style: 1px solid; padding-top:5px">
+
+    </div>
+</body>
+</html>

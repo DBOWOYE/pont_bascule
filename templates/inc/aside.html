@@ -1,0 +1,21 @@
+{% load static %}
+<aside class="app-sidebar sticky" id="sidebar">
+
+    <!-- Start::main-sidebar-header -->
+    <div class="main-sidebar-header">
+        <a href="#" class="header-logo">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-logo">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-logo">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-dark">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-dark">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-white">
+            <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-white">
+        </a>
+    </div>
+    <!-- End::main-sidebar-header -->
+
+    <!-- Start::main-sidebar -->
+    {% include "partials_base/sidebar.html"%}
+    <!-- End::main-sidebar -->
+
+</aside>

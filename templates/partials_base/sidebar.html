@@ -1,0 +1,46 @@
+{% load static %}
+<div class="main-sidebar" id="sidebar-scroll">
+
+    <!-- Start::nav -->
+    <nav class="main-menu-container nav nav-pills flex-column sub-open">
+        <div class="slide-left" id="slide-left">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z"></path> </svg>
+        </div>
+        <ul class="main-menu">
+            <!-- TABLEAU DE BORD -->
+        
+            {% if perms.gestion_bascule.view_pesee %}
+                <li class="slide__category"><span class="category-name">Gestion Pont bascule</span></li>
+                
+                <li class="slide">
+                    <a href="{% url 'accueil' %}" class="side-menu__item fw-bold">
+                        <i class="fa-solid fa-scale-balanced text-dark me-2 fs-16"></i>
+                        <span class="side-menu__label text-dark">Pesée</span>
+                    </a>
+                    <a href="{% url 'gestion-rapport' %}" class="side-menu__item fw-bold">
+                        <i class="fa-solid fa-chart-simple me-2 fs-16 text-dark"></i>
+                        <span class="side-menu__label text-dark">Rapports</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% if perms.gestion_bascule.view_camion %}
+            <li class="slide__category"><span class="category-name">GESTION DES CAMIONS</span></li>
+            
+            <li class="slide">
+                <a href="{% url 'camions' %}" class="side-menu__item fw-bold">
+                    <i class="fa-solid fa-truck me-2 fs-16 text-dark"></i>
+                    <span class="side-menu__label text-dark">Camions</span>
+                </a>
+                <a href="{% url 'accueil' %}" class="side-menu__item fw-bold">
+                    <i class="fa-solid fa-address-book me-2 fs-16 text-dark"></i>
+                    <span class="side-menu__label text-dark">Partenaires</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+
+        <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"> <path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z"></path> </svg></div>
+    </nav>
+    <!-- End::nav -->
+
+</div>

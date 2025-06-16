@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html
+  lang="en"
+  dir="ltr"
+  data-nav-layout="vertical"
+  data-theme-mode="light"
+  data-header-styles="light"
+  data-menu-styles="light"
+  data-toggled="close"
+>
+  <head>
+    <!-- Meta Data -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>PONT BASCULE - {% block title %} {% endblock %}</title>
+
+    {% include "inc/head.html"%}
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- Start Switcher -->
+    {% include "inc/delete-confirmation.html"%}
+    <!-- End Switcher -->
+
+    <!-- Loader -->
+    <div id="loader">
+      <img src="{% static 'images/media/loader.svg' %}" alt="" />
+    </div>
+    <!-- Loader -->
+
+    <div class="page">
+      <!-- app-header -->
+      {% include "inc/header.html"%}
+      <!-- /app-header -->
+      <!-- Start::app-sidebar -->
+      {% include "inc/aside.html"%}
+      <!-- End::app-sidebar -->
+
+      <!-- Start::app-content -->
+      <!-- <div class="main-content app-content">
+            <div class="container-fluid">
+            </div>
+        </div> -->
+      <!-- End::app-content -->
+
+      <!-- main-content -->
+<!-- main-content -->
+<div class="main-content app-content">
+	<!-- container -->
+	<div class="main-container container-fluid mt-2">
+      {% block content %} {% endblock %}
+  </div> 
+</div>
+      <!-- /main-content -->
+
+      <!-- Footer Start -->
+      {% include "inc/footer.html"%}
+      <!-- Footer End -->
+    </div>
+
+    <div class="scrollToTop">
+      <span class="arrow"><i class="ri-arrow-up-s-fill fs-20"></i></span>
+    </div>
+
+    {% include "inc/script.html"%}
+    <!-- Script End -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("tbody").on("click", ".delete", function () {
+          href = $(this).attr("data-href");
+          $("#delete-form").attr("action", href);
+        }),
+          new DataTable("#example");
+      });
+      // In your Javascript (external .js resource or <script> tag)
+      $(document).ready(function () {
+        $(".select").select2();
+        $("#emp").select2();
+        $("#releve").select2();
+      });
+    </script>
+  </body>
+</html>

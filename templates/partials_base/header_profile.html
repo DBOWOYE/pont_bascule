@@ -1,0 +1,21 @@
+<div class="header-element">
+    <!-- Start::header-link|dropdown-toggle -->
+   <div class="d-flex align-items-center">
+            {% if user %}
+            <div class="me-2">
+                {% if user.photo %} 
+                    <img src="{{ user.photo.url }}" alt="img" width="32" height="32" class="rounded-circle">
+                {% endif %}
+            </div>
+            <div class="" >
+                    <p class="fw-semibold text-center mb-0 lh-1">{{ user.last_name }} {{ user.first_name }} </p>
+
+                    {% if user.role != "Editeur" %}
+                        <a href="{% url 'profile' %}">Modifier profile</a>
+                    {% endif %}
+            </div>
+
+            {% endif %}
+   </div>
+    
+</div>  

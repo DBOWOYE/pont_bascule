@@ -1,0 +1,77 @@
+{% load static %}
+<header class="app-header">
+    <!-- Start::main-header-container -->
+    <div class="main-header-container container-fluid">
+
+        <!-- Start::header-content-left -->
+        <div class="header-content-left align-items-center">
+
+            <!-- Start::header-element -->
+            <div class="header-element">
+                <div class="horizontal-logo">
+                    <a href="#" class="header-logo">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-logo">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-logo">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-dark">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-dark">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="desktop-white">
+                        <img src="{% static 'images/logo/logo.jpg' %}" alt="logo" class="toggle-white">
+                    </a>
+                </div>
+            </div>
+            <!-- End::header-element -->
+
+            <!-- Start::header-element -->
+            <div class="header-element">
+                <!-- Start::header-link -->
+                <a aria-label="Hide Sidebar" class="sidemenu-toggle header-link animated-arrow hor-toggle horizontal-navtoggle" data-bs-toggle="sidebar" href="javascript:void(0);"><span></span></a>
+                <!-- End::header-link -->
+            
+            </div>
+            <!-- End::header-element -->
+
+            <!-- Start::header-element -->
+
+            <!-- End::header-element -->
+
+        </div>
+        <!-- End::header-content-left -->
+
+        <!-- Start::header-content-right -->
+        <div class="header-content-right">
+
+        
+            <!-- Start::header-element Profile -->
+            <div class="header-element">
+                <!-- Start::header-link|dropdown-toggle -->
+                <a href="#" class="header-link dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                        <div class="me-sm-2 me-0">
+                            {%if user.photo %}
+                                <img class="br-5" alt="" src="{{request.user.photo.url}}" height="32" width="32">
+                            {% else %}
+                                <img src="{% static 'images/faces/2.jpg' %}" alt="img" width="32" height="32" class="rounded-circle">
+                            {% endif %}
+                        </div>
+                        <div class="d-xl-block d-none" align="center">
+                            <p class="fw-semibold mb-0 lh-1">{{user.username}}</p>
+                        </div>
+                    </div>
+                </a>
+                <!-- End::header-link|dropdown-toggle -->
+                <ul class="main-header-dropdown dropdown-menu pt-0 overflow-hidden header-profile-dropdown dropdown-menu-end" aria-labelledby="mainHeaderProfile">
+                    {% comment %} <li><a class="dropdown-item d-flex border-bottom" href="#"><i class="far fa-user-circle fs-16 me-2 op-7"></i>Profile</a></li> {% endcomment %}
+                    <li><a class="dropdown-item d-flex" href="{% url 'logout'%}"><i class="far fa-arrow-alt-circle-left fs-16 me-2 op-7"></i>Sign Out</a></li>
+                </ul>
+            </div>
+            <!-- End::header-element -->
+
+
+
+        </div>
+        <!-- End::header-content-right -->
+
+    </div>
+    <!-- End::main-header-container -->
+
+</header>

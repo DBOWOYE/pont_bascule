@@ -1,0 +1,24 @@
+
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalScrollable2"
+    data-bs-keyboard="false" aria-hidden="true" role="dialog">
+    <!-- Scrollable modal -->
+    <div class="modal-dialog modal-dialog-centered">
+        <form action="" method="post" id="delete-form">
+            {% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header bg-danger ">
+                    <h6 class="modal-title text-white" id="staticBackdropLabel2">Confirmation suppression
+                    </h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Voulez-vous supprimer cet enregistrement ????</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button  type="submit" class="btn btn-sm btn-primary">Supprimer</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

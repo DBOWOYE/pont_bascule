@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Gestion des camions
+{% endblock %}
+
+
+{% block content %}
+		<!-- breadcrumb -->
+		<div class="breadcrumb-header justify-content-between">
+			<div class="left-content">
+				<span class="main-content-title mg-b-0 mg-b-lg-1 fw-bold">GESTION DU PONT BASCULE</span>
+			</div>
+			<div class="justify-content-center mt-2">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item fs-15"><a href="javascript:void(0);">Gestion des camions</a></li>
+					<li class="breadcrumb-item active" aria-current="page"><strong>Liste des camions</strong></li>
+				</ol>
+			</div>
+		</div>
+
+		<!-- /breadcrumb -->
+		<!-- -->
+		<div class="row">
+			<div class="col-12 col-sm-12">
+				<div class="card">
+					<div class="card-header">
+						<!-- Notifications  -->
+						<div class="col-12">
+							{% if messages %}
+							{% for message in messages %}
+							<p {% if message.tags %} class="bg-{{ message.tags }} p-2 text-white" {% endif %}>
+								{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+								{{ message }}
+							</p>
+							{% endfor %}
+						{% endif %}
+						</div>
+                        
+						<!-- Fin notification  -->
+
+					</div>
+					<div class="card-body pt-0 example1-table">
+						<div class=" d-flex justify-content-end mb-2 gap-2">
+                            <a href="{% url 'enregistrer-camion' %}" class="btn btn-dark btn-sm fw-bold"> <!--data-bs-toggle="modal" data-bs-target="#modalUserRegister"-->
+                                <i class="fa fa-plus me-2"></i> Nouveau camion
+                            </a>
+                            <form action="{% url 'importer-liste-camions' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="fichier" accept=".xlsx" required> 
+                                <button type="submit" class="badge bg-black p-2"><i class="fa fa-download me-2"></i>Importer camions</button>                   
+                            </form>
+						</div>
+                        <h5 class="fw-bold">Liste des camions</h5>
+						<div class="table-responsive" >
+                            <div class="card">
+                                
+                                <div class="card-body"> 
+                                    <table class="table nowrap">
+                                        <thead>
+                                            <th class="text-center"><strong>#</strong></th>
+                                            <th class="text-center"><strong>Radar</strong></th>
+                                            <th class="text-center"><strong>Immatriculation</strong></th>
+                                            <th class="text-center"><strong>Partenaire</strong></th>
+                                            <th class="text-center"><strong>Etat</strong></th>
+                                            <th class="text-center"><strong>Action</strong></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for camion in camions %}
+                                            <tr>
+                                                <td class="text-center">{{forloop.counter}}</td>
+                                                <td class="text-center">{{camion.radar}}</td>
+                                                <td class="text-center">{{camion.immatriculation}}</td>
+                                                <td class="text-center">{{camion.partenaire.nom}}</td>
+                                                <td class="text-center">
+                                                    {% if camion.status %}
+                                                        <span class="badge bg-primary p-1">Actif</span>
+                                                    {% else %}
+                                                        <span class="badge bg-secondary p-1">Inactif</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{% url 'modifier-camion' camion.slug %}" class="badge bg-dark"><i class="fa fa-pencil"></i></a>
+                                                    <span role="button" data-href="{% url 'supprimer-camion' camion.slug %}" data-bs-toggle="modal" data-bs-target="#delete" class="delete badge bg-danger">
+                                                        <i class="fa fa-trash-alt"></i>
+                                                    </span>
+                                                    <a href="{% url 'changer-status-camion' camion.slug %}">
+                                                        {% if camion.status %}
+                                                            <span class="badge bg-secondary"> <i class="fa fa-xmark"></i></a></span>
+                                                        {% else %}
+                                                            <span class="badge bg-primary"> <i class="fa fa-check-circle"></i></a></span>
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+						</div>
+                        {% if camions %}
+                            <div class="pagination mt-2 justify-content-center" >
+                                {% if camions.has_previous %}
+                                    <a href="?page=1" class="badge bg-dark p-2"><i class="fa fa-angles-left"></i></a> &nbsp;
+                                    <a href="?page={{camions.previous_page_number}}" class="badge bg-dark p-2"><i class="fa fa-chevron-left fw-bold"></i> </a>&nbsp;
+                                {% else %}
+                                    <span class="disable badge bg-light p-2"><i class="fa fa-angles-left fw-bold text-dark"></i> </span> &nbsp;
+                                    <span class="disable badge bg-light p-2" ><i class="fa fa-chevron-left fw-bold text-dark" ></i></span> &nbsp;
+                                {% endif %}
+                                <span class="badge bg-primary p-2">
+                                    Page {{camions.number}}/{{camions.paginator.num_pages}}
+                                </span> &nbsp;
+
+                                {% if camions.has_next %}
+                                    <a href="?page={{camions.next_page_number}}" class="badge bg-dark p-2"><i class="fa fa-chevron-right "></i></a> &nbsp;
+                                    <a href="?page={{camions.paginator.num_pages}}" class="badge bg-dark p-2"><i class="fa fa-angles-right fw-bold"></i> </a>
+                                {% else %}
+                                    <span class="disable badge bg-light p-2 "><i class="fa fa-chevron-right text-dark"></i> </span> &nbsp;
+                                    <span class="disable badge bg-light p-2" ><i class="fa fa-angles-right fw-bold text-dark"></i></span> &nbsp;
+                                {% endif %}
+                            </div>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+			<!-- /row closed -->
+            
+		</div>
+    
+	
+{% endblock %}

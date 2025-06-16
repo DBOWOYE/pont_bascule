@@ -1,0 +1,59 @@
+{% extends "base_auth.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center authentication authentication-basic h-100">
+        <div
+            class="col-xl-5 col-lg-6 col-md-6 col-sm-6 col-xs-6 card-sigin-main mx-auto my-auto py-4 justify-content-center">
+            <div class="card-sigin">
+                <!-- Demo content-->
+                <div class="main-card-signin d-md-flex">
+                        <div class="">
+
+                            <div class="main-signup-header">
+                                <h6 class="font-weight-semibold mb-4" align="center">Veuillez entrer vos informations de connexions
+                                </h6>
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div {% if message.tags %} class="bg-{{ message.tags }} p-2 text-white" {% endif %}>
+                                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+
+                                {% endif %}
+                                <div class="panel panel-primary">
+                                    <div class="panel-body tabs-menu-body border-0 p-3">
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="tab5">
+                                                <form action="{% url 'login' %}" method="post">
+                                                    {% csrf_token %}
+                                                    <form method="post">
+                                                      {% csrf_token %}
+                                                        <div class="row">
+                                                          <div class="col-md-12">{{form.username|as_crispy_field}}</div>
+                                                          <div class="col-md-12">{{form.password|as_crispy_field}}</div>
+                                                          <button type="submit" class="btn btn-dark text-center">Se connecter</button>
+                                                        </div>
+                                                       
+                                                      
+                                                    </form>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
