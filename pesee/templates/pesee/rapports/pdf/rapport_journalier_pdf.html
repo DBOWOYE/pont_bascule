@@ -5,7 +5,7 @@
     <title>Rapport journalier pesée</title>
     <style>
         @page {
-            size: a4 portrait;
+            size: a4 landscape;
             @frame header_frame {           /* Static Frame */
                 -pdf-frame-content: header_content;
                 left: 40pt;
@@ -14,7 +14,7 @@
                 height: 40pt;
             }
             @frame content_frame {          /* Content Frame */
-                left: 40pt; width: 512pt; top: 60pt; height: 700pt;
+                left: 40pt; width: 750pt; top: 60pt; height: 450pt;
             }
             @frame footer_frame {           /* Another static Frame */
                 -pdf-frame-content: footer_content;
@@ -56,9 +56,8 @@
     </style>
 </head>
 <body>
-    <div id="header_content" style="text-align: center;">PONT BASCULE</div>
-    <h1 style="text-align: center; font-size: 14px; margin-bottom:0px;">RAPPORT JOURNALIER PESEE</h1>
-    <h6 align="center">Date : {{date_rechercher|date:"d.m.Y"}}</h6>
+    <div id="header_content" style="text-align: center;"></div>
+    <h1 style="text-align: center; font-size: 16px; margin-bottom:5px;"><strong>RAPPORT JOURNALIER PESEE</strong></h1>
 
     <div>
         <table class="table table-bordered text-nowrap mb-0" id="example">
@@ -81,6 +80,7 @@
                     <td class="text-center">{{forloop.counter}}</td>
                     <td>{{r.reference}}</td>
                     <td>{{r.camion.radar}}</td>
+                    <td>{{r.camion.immatriculation}}</td>
                     <td align="center">{{r.date_entree|date:"d.m.Y H:i"}}</td>
                     <td align="right">{{r.poids_vide}}</td>
                     <td align="center">{{r.date_sortie|date:"d.m.Y H:i"}}</td>
@@ -90,7 +90,7 @@
                 {% endfor %}
                 <tr style="text-align: center; font-size: 12px;">
 
-                    <td colspan="7" style="font-weight: bold;" align="center">
+                    <td colspan="8" style="font-weight: bold;" align="center">
                         Total
                     </td>
                     
